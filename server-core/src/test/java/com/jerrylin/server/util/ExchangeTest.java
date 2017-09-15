@@ -17,6 +17,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import com.jerrylin.server.ClientUtils;
+import com.jerrylin.server.ServerUtils;
 
 public class ExchangeTest {
 	public static void main(String[]args){
@@ -78,11 +79,7 @@ public class ExchangeTest {
 				.addExactPath("/nonblocking", nonblocking);
 		
 		Undertow undertow = 
-			Undertow.builder()
-				.addHttpListener(8080, "0.0.0.0")
-				.setHandler(path)
-				.build();
-		undertow.start();
+			ServerUtils.startLocalServer(path);
 		
 		String json = "{\"A\": 1, \"B\": 2}";
 		ClientUtils.postJson("http://localhost:8080/blocking", json,
