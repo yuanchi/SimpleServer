@@ -36,14 +36,16 @@ public class SimpleServer implements Runnable {
 		}
 	}
 	
+	public Undertow getUndertow(){
+		return undertow;
+	}
+	
 	@Override
 	public void run() {
-		Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
-		
+		Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));		
 		undertow.getListenerInfo().forEach(info->{
 			logger.info("Start Server on {}", info.getAddress());
-		});
-		
+		});		
 		undertow.start();
 	}
 	
