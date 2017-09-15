@@ -6,6 +6,17 @@ import io.undertow.server.HttpServerExchange;
 import org.junit.Test;
 
 public class MiddlewareBuilderTest {
+	/**
+	 * printing results:<br>
+	 * BeginHandler begin...<br>
+	 * Next1Handler begin...<br>
+	 * Next2Handler begin...<br>
+	 * CompleteHandler begin...<br>
+	 * return to CompleteHandler...<br>
+	 * return to Next2Handler...<br>
+	 * return to Next1Handler...<br>
+	 * return to BeginHandler...<br>
+	 */
 	@Test
 	public void composeWithInitializingOrder()throws Exception{
 		CompleteHandler completeHandler = 
@@ -21,7 +32,10 @@ public class MiddlewareBuilderTest {
 			new BeginHandler(next1Handler);
 		
 		rootHandler.handleRequest(null);
-	}	
+	}
+	/**
+	 * printing results same as {@link #composeWithInitializingOrder()}
+	 */
 	@Test
 	public void composeWithNested()throws Exception{		
 		BeginHandler rootHandler = 
@@ -34,7 +48,10 @@ public class MiddlewareBuilderTest {
 			);
 		
 		rootHandler.handleRequest(null);
-	}	
+	}
+	/**
+	 * printing results same as {@link #composeWithInitializingOrder()}
+	 */
 	@Test
 	public void buildWithConstructor()throws Exception{
 		HttpHandler rootHandler = 
@@ -46,6 +63,9 @@ public class MiddlewareBuilderTest {
 		
 		rootHandler.handleRequest(null);
 	}
+	/**
+	 * printing results same as {@link #composeWithInitializingOrder()}
+	 */
 	@Test
 	public void buildWithStaticMethod()throws Exception{
 		HttpHandler rootHandler = 
